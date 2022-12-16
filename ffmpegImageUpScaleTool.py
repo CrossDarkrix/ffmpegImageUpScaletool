@@ -389,44 +389,46 @@ class UIFFmUpImg(object):
         self.StartConvert.setText('Stop')
         check_ffmpeg = subprocess.Popen('ffmpeg -hide_banner -version', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[1].decode(errors='ignore')
         if not check_ffmpeg == '':
-            if platform.system() == 'Windows':
-                os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'), exist_ok=True)
-                back_path = os.getcwd()
-                os.chdir(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
-                win_ffmpeg = urllib.request.urlopen(urllib.request.Request('https://github.com/BtbN/FFmpeg-Builds/releases/latest/download/ffmpeg-master-latest-win64-gpl.zip', headers={'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0; en-la; Nexus Build/JPG991) AppleWebKit/511.2 (KHTML, like Gecko) Version/5.0 Mobile/11S444 YJApp-ANDROID jp.co.yahoo.android.yjtop/4.01.1.5'})).read()
-                with zipfile.ZipFile(BytesIO(win_ffmpeg)) as ffmpegzip:
-                    ffmpegzip.extractall(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp') + '/.')
-                shutil.move(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp', 'ffmpeg-master-latest-win64-gpl', 'bin'), os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin'))
-                os.chdir(back_path)
-                shutil.rmtree(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
-            if platform.system() == 'Linux':
-                os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'), exist_ok=True)
-                back_path = os.getcwd()
-                os.chdir(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
-                linux_ffmpeg = urllib.request.urlopen(urllib.request.Request('https://github.com/BtbN/FFmpeg-Builds/releases/latest/download/ffmpeg-master-latest-linux64-gpl.tar.xz', headers={'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0; en-la; Nexus Build/JPG991) AppleWebKit/511.2 (KHTML, like Gecko) Version/5.0 Mobile/11S444 YJApp-ANDROID jp.co.yahoo.android.yjtop/4.01.1.5'})).read()
-                with open('tmp.tar.xz', 'wb') as f:
-                    f.write(linux_ffmpeg)
-                os.remove('tmp.tar.xz')
-                with tarfile.open('tmp.tar.xz', 'r:xz') as ffmpegzip:
-                    ffmpegzip.extractall(path=os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp') + '/.')
-                shutil.move(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp', 'ffmpeg-master-latest-linux64-gpl', 'bin'), os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin'))
-                os.chdir(back_path)
-                shutil.rmtree(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
-                os.chmod(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg'), 0o755)
-            if platform.system() == 'Darwin':
-                if not platform.machine() == 'arm64':
-                    os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin'), exist_ok=True)
-                    darwin_ffmpeg = urllib.request.urlopen(urllib.request.Request('https://evermeet.cx/ffmpeg/ffmpeg-5.1.2.zip', headers={'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0; en-la; Nexus Build/JPG991) AppleWebKit/511.2 (KHTML, like Gecko) Version/5.0 Mobile/11S444 YJApp-ANDROID jp.co.yahoo.android.yjtop/4.01.1.5'})).read()
-                    with zipfile.ZipFile(BytesIO(darwin_ffmpeg)) as ffmpegzip:
-                        ffmpegzip.extractall(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin') + '/.')
+            check_ffmpeg2 = subprocess.Popen('{} -hide_banner -version'.format(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[1].decode(errors='ignore')
+            if not check_ffmpeg2 == '':
+                if platform.system() == 'Windows':
+                    os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'), exist_ok=True)
+                    back_path = os.getcwd()
+                    os.chdir(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
+                    win_ffmpeg = urllib.request.urlopen(urllib.request.Request('https://github.com/BtbN/FFmpeg-Builds/releases/latest/download/ffmpeg-master-latest-win64-gpl.zip', headers={'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0; en-la; Nexus Build/JPG991) AppleWebKit/511.2 (KHTML, like Gecko) Version/5.0 Mobile/11S444 YJApp-ANDROID jp.co.yahoo.android.yjtop/4.01.1.5'})).read()
+                    with zipfile.ZipFile(BytesIO(win_ffmpeg)) as ffmpegzip:
+                        ffmpegzip.extractall(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp') + '/.')
+                    shutil.move(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp', 'ffmpeg-master-latest-win64-gpl', 'bin'), os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin'))
+                    os.chdir(back_path)
+                    shutil.rmtree(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
+                if platform.system() == 'Linux':
+                    os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'), exist_ok=True)
+                    back_path = os.getcwd()
+                    os.chdir(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
+                    linux_ffmpeg = urllib.request.urlopen(urllib.request.Request('https://github.com/BtbN/FFmpeg-Builds/releases/latest/download/ffmpeg-master-latest-linux64-gpl.tar.xz', headers={'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0; en-la; Nexus Build/JPG991) AppleWebKit/511.2 (KHTML, like Gecko) Version/5.0 Mobile/11S444 YJApp-ANDROID jp.co.yahoo.android.yjtop/4.01.1.5'})).read()
+                    with open('tmp.tar.xz', 'wb') as f:
+                        f.write(linux_ffmpeg)
+                    os.remove('tmp.tar.xz')
+                    with tarfile.open('tmp.tar.xz', 'r:xz') as ffmpegzip:
+                        ffmpegzip.extractall(path=os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp') + '/.')
+                    shutil.move(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp', 'ffmpeg-master-latest-linux64-gpl', 'bin'), os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin'))
+                    os.chdir(back_path)
+                    shutil.rmtree(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
                     os.chmod(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg'), 0o755)
-                else:
-                    try:
-                        check_darwin_ffmpeg = subprocess.Popen('brew install ffmpeg', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[1].decode(errors='ignore')
-                    except:
-                        check_darwin_ffmpeg = '1'
-                    if not check_darwin_ffmpeg == '':
-                        sys.exit(1)
+                if platform.system() == 'Darwin':
+                    if not platform.machine() == 'arm64':
+                        os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin'), exist_ok=True)
+                        darwin_ffmpeg = urllib.request.urlopen(urllib.request.Request('https://evermeet.cx/ffmpeg/ffmpeg-5.1.2.zip', headers={'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0; en-la; Nexus Build/JPG991) AppleWebKit/511.2 (KHTML, like Gecko) Version/5.0 Mobile/11S444 YJApp-ANDROID jp.co.yahoo.android.yjtop/4.01.1.5'})).read()
+                        with zipfile.ZipFile(BytesIO(darwin_ffmpeg)) as ffmpegzip:
+                            ffmpegzip.extractall(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin') + '/.')
+                        os.chmod(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg'), 0o755)
+                    else:
+                        try:
+                            check_darwin_ffmpeg = subprocess.Popen('brew install ffmpeg', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[1].decode(errors='ignore')
+                        except:
+                            check_darwin_ffmpeg = '1'
+                        if not check_darwin_ffmpeg == '':
+                            sys.exit(1)
         else:
             self.ffmpeg_check_ok = True
         concurrent.futures.ThreadPoolExecutor(os.cpu_count() * 50).submit(self.ffmupimg_main)
