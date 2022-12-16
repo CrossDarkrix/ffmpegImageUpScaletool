@@ -3,7 +3,7 @@
 	<img width="200px" height="200px" alt="ffmpegUpScale" src="https://raw.githubusercontent.com/CrossDarkrix/ffmpeg_Image_UpScale_tool/main/image/ffmUpScale_logo.png"></a>
 </div>
 
-<h2 align="center">ffmpegUpScaleTool - Multi Platform Image UpScale Tool -</h2>
+<h2 align="center">ffmpegImageUpScaleTool - Multi Platform Image UpScale Tool -</h2>
 <div>
 	<h2>Build Requirement Modules</h2>
 	<ul>
