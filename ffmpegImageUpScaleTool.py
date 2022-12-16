@@ -1,7 +1,7 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import concurrent.futures
-import multiprocessing
 import multiprocessing as mp
 import os
 import platform
