@@ -9,7 +9,6 @@ import shutil
 import subprocess
 import sys
 import tarfile
-import threading
 import urllib.request
 import zipfile
 from io import BytesIO
@@ -20,7 +19,7 @@ from PySide6.QtGui import (QFont, QIcon,
                            QImage, QPixmap)
 from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QProgressBar,
                                QPushButton, QSizePolicy, QSpinBox, QMainWindow, QFileDialog, QFileIconProvider,
-                               QMessageBox)
+                               QMessageBox, QPlainTextEdit, QFrame)
 
 DragPath = ['']
 DragPath2 = ['']
@@ -213,7 +212,7 @@ class UIFFmUpImg(object):
     def setupUi(self, ffmupimg):
         if not ffmupimg.objectName():
             ffmupimg.setObjectName("ffmupimg")
-        ffmupimg.resize(1102, 342)
+        ffmupimg.resize(1102, 460)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -226,7 +225,7 @@ class UIFFmUpImg(object):
         ffmupimg.setStyleSheet("QWidget{color: White;background-color: #131519}")
         self.FileCompleteProgressBar = QProgressBar(ffmupimg)
         self.FileCompleteProgressBar.setObjectName(u"FileCompleteProgressBar")
-        self.FileCompleteProgressBar.setGeometry(QRect(10, 280, 1081, 51))
+        self.FileCompleteProgressBar.setGeometry(QRect(10, 260, 1081, 51))
         font1 = QFont()
         font1.setFamilies(["Arial"])
         font1.setPointSize(10)
@@ -244,7 +243,7 @@ class UIFFmUpImg(object):
         self.Input.setFrame(True)
         self.Output = dragQLineEdit2(ffmupimg)
         self.Output.setObjectName("Output")
-        self.Output.setGeometry(QRect(610, 80, 421, 41))
+        self.Output.setGeometry(QRect(620, 80, 411, 41))
         sizePolicy.setHeightForWidth(self.Output.sizePolicy().hasHeightForWidth())
         self.Output.setSizePolicy(sizePolicy)
         self.Output.setFont(font)
@@ -252,7 +251,7 @@ class UIFFmUpImg(object):
         self.Output.setFrame(True)
         self.Magnification = QSpinBox(ffmupimg)
         self.Magnification.setObjectName("Magnification")
-        self.Magnification.setGeometry(QRect(480, 80, 111, 41))
+        self.Magnification.setGeometry(QRect(480, 80, 131, 41))
         self.Magnification.setFont(font)
         self.Magnification.setStyleSheet("QSpinBox{color: White;background-color: #131519;}")
         self.Magnification.setFrame(True)
@@ -294,12 +293,22 @@ class UIFFmUpImg(object):
         self.StartConvert.setCheckable(True)
         self.StartConvert.setFlat(False)
         self.StartConvert.clicked.connect(self.convertClicked)
-
+        self.LogView = QPlainTextEdit(ffmupimg)
+        self.LogView.setObjectName("LogView")
+        self.LogView.setGeometry(QRect(10, 320, 1081, 131))
+        self.LogView.setStyleSheet("QPlainTextEdit{color: White;background-color: #131519;border 0px;}")
+        self.LogView.setFrameShape(QFrame.StyledPanel)
+        self.LogView.setFrameShadow(QFrame.Sunken)
+        self.LogView.setLineWidth(1)
+        self.LogView.setUndoRedoEnabled(False)
+        self.LogView.setReadOnly(True)
+        self.LogView.setBackgroundVisible(False)
+        self.LogView.setCenterOnScroll(True)
         self.Title = QLabel(ffmupimg)
         self.Title.setObjectName("Title")
         self.Title.setGeometry(QRect(40, 10, 991, 51))
         self.Title.setFont(font)
-        self.Title.setStyleSheet(u"QLabel{color: White;background-color: #131519}")
+        self.Title.setStyleSheet("QLabel{color: White;background-color: #131519}")
         self.Title.setAlignment(Qt.AlignCenter)
         self.ffmupimg = ffmupimg
         self.ffmalert = QMessageBox(ffmupimg)
@@ -387,25 +396,42 @@ class UIFFmUpImg(object):
 
     def ConvertStart(self):
         self.StartConvert.setText('Stop')
+        self.LogView.appendPlainText('Checking System Width ffmpeg.........')
         check_ffmpeg = subprocess.Popen('ffmpeg -hide_banner -version', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[1].decode(errors='ignore')
+        self.LogView.appendPlainText('Done!')
         if not check_ffmpeg == '':
+            self.LogView.appendPlainText('Checking User Width ffmpeg..........')
             check_ffmpeg2 = subprocess.Popen('{} -hide_banner -version'.format(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[1].decode(errors='ignore')
+            self.LogView.appendPlainText('Done!')
             if not check_ffmpeg2 == '':
+                self.LogView.appendPlainText('ffmpeg not install!')
+                self.LogView.appendPlainText('ffmpeg auto installing.....')
                 if platform.system() == 'Windows':
+                    self.LogView.appendPlainText('Installation Mode: Windows Machine.....')
+                    self.LogView.appendPlainText('Create tmp directory: {}'.format(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp')))
                     os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'), exist_ok=True)
+                    self.LogView.appendPlainText('tmp Folder Created!')
                     back_path = os.getcwd()
                     os.chdir(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
+                    self.LogView.appendPlainText('Downloading Official ffmpeg..........')
                     win_ffmpeg = urllib.request.urlopen(urllib.request.Request('https://github.com/BtbN/FFmpeg-Builds/releases/latest/download/ffmpeg-master-latest-win64-gpl.zip', headers={'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0; en-la; Nexus Build/JPG991) AppleWebKit/511.2 (KHTML, like Gecko) Version/5.0 Mobile/11S444 YJApp-ANDROID jp.co.yahoo.android.yjtop/4.01.1.5'})).read()
+                    self.LogView.appendPlainText('Extract ffmpeg.......')
                     with zipfile.ZipFile(BytesIO(win_ffmpeg)) as ffmpegzip:
                         ffmpegzip.extractall(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp') + '/.')
                     shutil.move(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp', 'ffmpeg-master-latest-win64-gpl', 'bin'), os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin'))
                     os.chdir(back_path)
                     shutil.rmtree(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
+                    self.LogView.appendPlainText('Installed ffmpeg! Install Path: {}'.format(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin')))
                 if platform.system() == 'Linux':
+                    self.LogView.appendPlainText('Installation Mode: Linux Machine.......')
+                    self.LogView.appendPlainText('Create tmp directory: {}'.format(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp')))
                     os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'), exist_ok=True)
+                    self.LogView.appendPlainText('tmp Folder Created!')
                     back_path = os.getcwd()
                     os.chdir(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
+                    self.LogView.appendPlainText('Downloading Official ffmpeg..........')
                     linux_ffmpeg = urllib.request.urlopen(urllib.request.Request('https://github.com/BtbN/FFmpeg-Builds/releases/latest/download/ffmpeg-master-latest-linux64-gpl.tar.xz', headers={'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0; en-la; Nexus Build/JPG991) AppleWebKit/511.2 (KHTML, like Gecko) Version/5.0 Mobile/11S444 YJApp-ANDROID jp.co.yahoo.android.yjtop/4.01.1.5'})).read()
+                    self.LogView.appendPlainText('Extract ffmpeg.......')
                     with open('tmp.tar.xz', 'wb') as f:
                         f.write(linux_ffmpeg)
                     os.remove('tmp.tar.xz')
@@ -415,23 +441,32 @@ class UIFFmUpImg(object):
                     os.chdir(back_path)
                     shutil.rmtree(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
                     os.chmod(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg'), 0o755)
+                    self.LogView.appendPlainText('Installed ffmpeg! Install Path: {}'.format(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin')))
                 if platform.system() == 'Darwin':
+                    self.LogView.appendPlainText('Installation Mode: MacOS Machine.....')
                     if not platform.machine() == 'arm64':
                         os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin'), exist_ok=True)
+                        self.LogView.appendPlainText('Downloading Official ffmpeg..........')
                         darwin_ffmpeg = urllib.request.urlopen(urllib.request.Request('https://evermeet.cx/ffmpeg/ffmpeg-5.1.2.zip', headers={'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0; en-la; Nexus Build/JPG991) AppleWebKit/511.2 (KHTML, like Gecko) Version/5.0 Mobile/11S444 YJApp-ANDROID jp.co.yahoo.android.yjtop/4.01.1.5'})).read()
+                        self.LogView.appendPlainText('Extract ffmpeg.......')
                         with zipfile.ZipFile(BytesIO(darwin_ffmpeg)) as ffmpegzip:
                             ffmpegzip.extractall(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin') + '/.')
                         os.chmod(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg'), 0o755)
+                        self.LogView.appendPlainText('Installed ffmpeg! Install Path: {}'.format(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin')))
                     else:
+                        self.LogView.appendPlainText('MacOS Arm Edition Detected!')
+                        self.LogView.appendPlainText('trying brew Installing...........')
                         try:
                             check_darwin_ffmpeg = subprocess.Popen('brew install ffmpeg', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[1].decode(errors='ignore')
                         except:
                             check_darwin_ffmpeg = '1'
                         if not check_darwin_ffmpeg == '':
-                            sys.exit(1)
+                            self.LogView.appendPlainText('Error!')
+                        self.LogView.appendPlainText('Done!')
         else:
+            self.LogView.appendPlainText('ffmpeg Installed!')
             self.ffmpeg_check_ok = True
-        concurrent.futures.ThreadPoolExecutor(os.cpu_count() * 50).submit(self.ffmupimg_main)
+        concurrent.futures.ThreadPoolExecutor(os.cpu_count() * 100).submit(self.ffmupimg_main)
 
     def ConvertPause(self):
         self.is_conv_ok = False
