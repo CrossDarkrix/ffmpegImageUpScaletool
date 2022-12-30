@@ -462,6 +462,7 @@ class UIFFmUpImg(object):
                             check_darwin_ffmpeg = '1'
                         if not check_darwin_ffmpeg == '':
                             self.LogView.appendPlainText('Error!')
+                        self.ffmpeg_check_ok = True
                         self.LogView.appendPlainText('Done!')
         else:
             self.LogView.appendPlainText('ffmpeg Installed!')
