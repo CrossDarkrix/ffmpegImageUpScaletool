@@ -33,43 +33,43 @@ class UpScaleObject(object):
     def upscale(self):
         if not self.ffmpeg_check:
             if self.fname.split('.')[-1].lower() == 'png':
-                subprocess.run('{} -hide_banner -loglevel quiet -i "{}" -vf scale=iw*{}:ih*{} "{}"'.format(os.path.join(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg')), self.fname, self.magnification, self.magnification, '{} (x{}).png'.format(self.fname.split('.')[0], self.magnification)), shell=True)
+                subprocess.run('{} -hide_banner -loglevel quiet -i "{}" -vf scale=iw*{}:ih*{} "{}"'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), self.fname, self.magnification, self.magnification, '{} (x{}).png'.format(self.fname.split('.')[0], self.magnification)), shell=True)
                 try:
                     os.remove(self.fname)
                 except:
                     pass
             if self.fname.split('.')[-1].lower() == 'jpg':
-                subprocess.run('{} -hide_banner -loglevel quiet -i "{}" -vf scale=iw*{}:ih*{} "{}"'.format(os.path.join(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg')), self.fname, self.magnification, self.magnification, '{} (x{}).png'.format(self.fname.split('.')[0], self.magnification)), shell=True)
+                subprocess.run('{} -hide_banner -loglevel quiet -i "{}" -vf scale=iw*{}:ih*{} "{}"'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), self.fname, self.magnification, self.magnification, '{} (x{}).png'.format(self.fname.split('.')[0], self.magnification)), shell=True)
                 try:
                     os.remove(self.fname)
                 except:
                     pass
             if self.fname.split('.')[-1].lower() == 'jpeg':
-                subprocess.run('{} -hide_banner -loglevel quiet -i "{}" -vf scale=iw*{}:ih*{} "{}"'.format(os.path.join(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg')), self.fname, self.magnification, self.magnification, '{} (x{}).png'.format(self.fname.split('.')[0], self.magnification)), shell=True)
+                subprocess.run('{} -hide_banner -loglevel quiet -i "{}" -vf scale=iw*{}:ih*{} "{}"'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), self.fname, self.magnification, self.magnification, '{} (x{}).png'.format(self.fname.split('.')[0], self.magnification)), shell=True)
                 try:
                     os.remove(self.fname)
                 except:
                     pass
             if self.fname.split('.')[-1].lower() == 'gif':
-                subprocess.run('{} -hide_banner -loglevel quiet -i "{}" -vf scale=iw*{}:ih*{} "{}"'.format(os.path.join(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg')), self.fname, self.magnification, self.magnification, '{} (x{}).png'.format(self.fname.split('.')[0], self.magnification)), shell=True)
+                subprocess.run('{} -hide_banner -loglevel quiet -i "{}" -vf scale=iw*{}:ih*{} "{}"'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), self.fname, self.magnification, self.magnification, '{} (x{}).png'.format(self.fname.split('.')[0], self.magnification)), shell=True)
                 try:
                     os.remove(self.fname)
                 except:
                     pass
             if self.fname.split('.')[-1].lower() == 'tiff':
-                subprocess.run('{} -hide_banner -loglevel quiet -i "{}" -vf scale=iw*{}:ih*{} "{}"'.format(os.path.join(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg')), self.fname, self.magnification, self.magnification, '{} (x{}).png'.format(self.fname.split('.')[0], self.magnification)), shell=True)
+                subprocess.run('{} -hide_banner -loglevel quiet -i "{}" -vf scale=iw*{}:ih*{} "{}"'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), self.fname, self.magnification, self.magnification, '{} (x{}).png'.format(self.fname.split('.')[0], self.magnification)), shell=True)
                 try:
                     os.remove(self.fname)
                 except:
                     pass
             if self.fname.split('.')[-1].lower() == 'bmp':
-                subprocess.run('{} -hide_banner -loglevel quiet -i "{}" -vf scale=iw*{}:ih*{} "{}"'.format(os.path.join(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg')), self.fname, self.magnification, self.magnification, '{} (x{}).png'.format(self.fname.split('.')[0], self.magnification)), shell=True)
+                subprocess.run('{} -hide_banner -loglevel quiet -i "{}" -vf scale=iw*{}:ih*{} "{}"'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), self.fname, self.magnification, self.magnification, '{} (x{}).png'.format(self.fname.split('.')[0], self.magnification)), shell=True)
                 try:
                     os.remove(self.fname)
                 except:
                     pass
             if self.fname.split('.')[-1].lower() == 'rgb':
-                subprocess.run('{} -hide_banner -loglevel quiet -i "{}" -vf scale=iw*{}:ih*{} "{}"'.format(os.path.join(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg')), self.fname, self.magnification, self.magnification, '{} (x{}).png'.format(self.fname.split('.')[0], self.magnification)), shell=True)
+                subprocess.run('{} -hide_banner -loglevel quiet -i "{}" -vf scale=iw*{}:ih*{} "{}"'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), self.fname, self.magnification, self.magnification, '{} (x{}).png'.format(self.fname.split('.')[0], self.magnification)), shell=True)
                 try:
                     os.remove(self.fname)
                 except:
@@ -366,10 +366,10 @@ class UIFFmUpImg(object):
                 except:
                     pass
                 back_path = os.getcwd()
-                os.chdir(os.path.join(os.path.join(self.OutputFolderPath, outputdir_name)))
+                os.chdir(os.path.join(self.OutputFolderPath, outputdir_name))
                 workpath = os.getcwd()
                 self.TotalFiles = self.detect_totalfiles(workpath)
-                for c, file1 in enumerate(self.find_imagefile(os.path.join(os.path.join(self.OutputFolderPath, outputdir_name)))):
+                for c, file1 in enumerate(self.find_imagefile(os.path.join(self.OutputFolderPath, outputdir_name))):
                     file1 = file1.replace(os.sep, '/')
                     if self.is_conv_ok:
                         if os.path.exists(os.path.dirname(file1)):
@@ -401,34 +401,34 @@ class UIFFmUpImg(object):
         self.LogView.appendPlainText('Done!')
         if not check_ffmpeg == '':
             self.LogView.appendPlainText('Checking User Width ffmpeg..........')
-            check_ffmpeg2 = subprocess.Popen('{} -hide_banner -version'.format(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[1].decode(errors='ignore')
+            check_ffmpeg2 = subprocess.Popen('{} -hide_banner -version'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[1].decode(errors='ignore')
             self.LogView.appendPlainText('Done!')
             if not check_ffmpeg2 == '':
                 self.LogView.appendPlainText('ffmpeg not install!')
                 self.LogView.appendPlainText('ffmpeg auto installing.....')
                 if platform.system() == 'Windows':
                     self.LogView.appendPlainText('Installation Mode: Windows Machine.....')
-                    self.LogView.appendPlainText('Create tmp directory: {}'.format(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp')))
-                    os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'), exist_ok=True)
+                    self.LogView.appendPlainText('Create tmp directory: {}'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp')))
+                    os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp'), exist_ok=True)
                     self.LogView.appendPlainText('tmp Folder Created!')
                     back_path = os.getcwd()
-                    os.chdir(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
+                    os.chdir(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp'))
                     self.LogView.appendPlainText('Downloading Official ffmpeg..........')
                     win_ffmpeg = urllib.request.urlopen(urllib.request.Request('https://github.com/BtbN/FFmpeg-Builds/releases/latest/download/ffmpeg-master-latest-win64-gpl.zip', headers={'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0; en-la; Nexus Build/JPG991) AppleWebKit/511.2 (KHTML, like Gecko) Version/5.0 Mobile/11S444 YJApp-ANDROID jp.co.yahoo.android.yjtop/4.01.1.5'})).read()
                     self.LogView.appendPlainText('Extract ffmpeg.......')
                     with zipfile.ZipFile(BytesIO(win_ffmpeg)) as ffmpegzip:
-                        ffmpegzip.extractall(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp') + '/.')
-                    shutil.move(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp', 'ffmpeg-master-latest-win64-gpl', 'bin'), os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin'))
+                        ffmpegzip.extractall(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp') + '/.')
+                    shutil.move(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp', 'ffmpeg-master-latest-win64-gpl', 'bin'), os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin'))
                     os.chdir(back_path)
-                    shutil.rmtree(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
-                    self.LogView.appendPlainText('Installed ffmpeg! Install Path: {}'.format(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin')))
+                    shutil.rmtree(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp'))
+                    self.LogView.appendPlainText('Installed ffmpeg! Install Path: {}'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin')))
                 if platform.system() == 'Linux':
                     self.LogView.appendPlainText('Installation Mode: Linux Machine.......')
-                    self.LogView.appendPlainText('Create tmp directory: {}'.format(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp')))
-                    os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'), exist_ok=True)
+                    self.LogView.appendPlainText('Create tmp directory: {}'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp')))
+                    os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp'), exist_ok=True)
                     self.LogView.appendPlainText('tmp Folder Created!')
                     back_path = os.getcwd()
-                    os.chdir(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
+                    os.chdir(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp'))
                     self.LogView.appendPlainText('Downloading Official ffmpeg..........')
                     linux_ffmpeg = urllib.request.urlopen(urllib.request.Request('https://github.com/BtbN/FFmpeg-Builds/releases/latest/download/ffmpeg-master-latest-linux64-gpl.tar.xz', headers={'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0; en-la; Nexus Build/JPG991) AppleWebKit/511.2 (KHTML, like Gecko) Version/5.0 Mobile/11S444 YJApp-ANDROID jp.co.yahoo.android.yjtop/4.01.1.5'})).read()
                     self.LogView.appendPlainText('Extract ffmpeg.......')
@@ -436,23 +436,23 @@ class UIFFmUpImg(object):
                         f.write(linux_ffmpeg)
                     os.remove('tmp.tar.xz')
                     with tarfile.open('tmp.tar.xz', 'r:xz') as ffmpegzip:
-                        ffmpegzip.extractall(path=os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp') + '/.')
-                    shutil.move(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp', 'ffmpeg-master-latest-linux64-gpl', 'bin'), os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin'))
+                        ffmpegzip.extractall(path=os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp') + '/.')
+                    shutil.move(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp', 'ffmpeg-master-latest-linux64-gpl', 'bin'), os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin'))
                     os.chdir(back_path)
-                    shutil.rmtree(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
-                    os.chmod(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg'), 0o755)
-                    self.LogView.appendPlainText('Installed ffmpeg! Install Path: {}'.format(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin')))
+                    shutil.rmtree(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp'))
+                    os.chmod(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), 0o755)
+                    self.LogView.appendPlainText('Installed ffmpeg! Install Path: {}'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin')))
                 if platform.system() == 'Darwin':
                     self.LogView.appendPlainText('Installation Mode: MacOS Machine.....')
                     if not platform.machine() == 'arm64':
-                        os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin'), exist_ok=True)
+                        os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin'), exist_ok=True)
                         self.LogView.appendPlainText('Downloading Official ffmpeg..........')
                         darwin_ffmpeg = urllib.request.urlopen(urllib.request.Request('https://evermeet.cx/ffmpeg/ffmpeg-5.1.2.zip', headers={'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0; en-la; Nexus Build/JPG991) AppleWebKit/511.2 (KHTML, like Gecko) Version/5.0 Mobile/11S444 YJApp-ANDROID jp.co.yahoo.android.yjtop/4.01.1.5'})).read()
                         self.LogView.appendPlainText('Extract ffmpeg.......')
                         with zipfile.ZipFile(BytesIO(darwin_ffmpeg)) as ffmpegzip:
-                            ffmpegzip.extractall(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin') + '/.')
-                        os.chmod(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg'), 0o755)
-                        self.LogView.appendPlainText('Installed ffmpeg! Install Path: {}'.format(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin')))
+                            ffmpegzip.extractall(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin') + '/.')
+                        os.chmod(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), 0o755)
+                        self.LogView.appendPlainText('Installed ffmpeg! Install Path: {}'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin')))
                     else:
                         self.LogView.appendPlainText('MacOS Arm Edition Detected!')
                         self.LogView.appendPlainText('trying brew Installing...........')
